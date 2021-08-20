@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Ajax</title>
+    <!-- css bootstarp -->
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css"
+      integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l"
+      crossorigin="anonymous"
+    />
+  </head>
+  <body>
+    <!-- Navbar -->
+    <ul class="nav">
+      <li class="nav-item">
+        <a class="nav-link text-dark fw-bold" aria-current="page" href="#">
+          <b>Sandbox</b>
+        </a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link text-dark" href="#">Buku</a>
+      </li>
+    </ul>
+    <div class="container">
+      <!-- Header -->
+      <div class="container-md">
+        <div class="row">
+          <div class="col-md-3 fw-bold"><b>List data buku</b></div>
+
+          <div class="col-md-9 d-flex justify-content-end">
+            <button
+              type="button"
+              class="btn btn-info"
+              data-toggle="modal"
+              data-target="#exampleModal"
+            >
+              Tambah Buku
+            </button>
+          </div>
+        </div>
+        <!-- Table -->
+        <table class="table">
+          <thead>
+            <tr>
+              <th scope="col">#</th>
+              <th scope="col">Nama</th>
+              <th scope="col">Kategori</th>
+              <th scope="col">Aksi</th>
+            </tr>
+          </thead>
+        </table>
+      </div>
+      <!-- Modal -->
+      <div
+        class="modal fade"
+        id="exampleModal"
+        tabindex="-1"
+        aria-labelledby="exampleModalLabel"
+        aria-hidden="true"
+      >
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+              <button
+                type="button"
+                class="close"
+                data-dismiss="modal"
+                aria-label="Close"
+              >
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <form id="form-post">
+              <div class="modal-body">
+                <div class="form-group">
+                  <label for="name-add">Nama Buku</label>
+                  <input
+                    id="name-add"
+                    class="form-control"
+                    type="text"
+                    name="name"
+                    required
+                  />
+                </div>
+                <div class="form-group">
+                  <label for="description-add">Kategori</label>
+                  <input
+                    id="description-add"
+                    class="form-control"
+                    type="text"
+                    name="description"
+                  />
+                </div>
+              </div>
+              <div class="modal-footer">
+                <button
+                  type="button"
+                  class="btn btn-secondary"
+                  data-dismiss="modal"
+                >
+                  Close
+                </button>
+                <button type="submit" class="btn btn-primary">
+                  Save changes
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+
+      <!-- Modal edit-->
+      <div
+        class="modal fade"
+        id="exampleModal-edit"
+        tabindex="-1"
+        aria-labelledby="exampleModalLabel"
+        aria-hidden="true"
+      >
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+              <button
+                type="button"
+                class="close"
+                data-dismiss="modal"
+                aria-label="Close"
+              >
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <form id="form-edit">
+              <div class="modal-body">
+                <div class="form-group">
+                  <label for="name-edit">Name</label>
+                  <input
+                    id="name-edit"
+                    class="form-control"
+                    type="text"
+                    name="name"
+                    required
+                  />
+                  <input type="text" name="" id="id-edit" hidden readonly />
+                </div>
+                <div class="form-group">
+                  <label for="description-edit">Description</label>
+                  <input
+                    id="description-edit"
+                    class="form-control"
+                    type="text"
+                    name="description"
+                  />
+                </div>
+                <div class="form-group">
+                  <label for="startDate-edit">Start Date</label>
+                  <input
+                    id="startDate-edit"
+                    class="form-control"
+                    type="date"
+                    name="startDate"
+                  />
+                </div>
+                <div class="form-group">
+                  <label for="endDate-edit">End Date</label>
+                  <input
+                    id="endDate-edit"
+                    class="form-control"
+                    type="date"
+                    name="enDate"
+                  />
+                </div>
+              </div>
+              <div class="modal-footer">
+                <button
+                  type="button"
+                  class="btn btn-secondary"
+                  data-dismiss="modal"
+                >
+                  Close
+                </button>
+                <button type="submit" class="btn btn-primary">
+                  Save changes
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+      <div id="listdata" class="row"></div>
+    </div>
+
+    <!-- jquery full -->
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"
+      integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    ></script>
+    <!-- bootstrap -->
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-Piv4xVNRyMGpqkS2by6br4gNJ7DXjqk09RmUpJ8jgGtD7zP9yug3goQfGII0yAns"
+      crossorigin="anonymous"
+    ></script>
+    <!-- axios -->
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <!-- sweet alert -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script>
+      const API = `https://mybook-order.herokuapp.com/books`;
+      axios
+        .get(API)
+        .then((response) => console.log(response))
+        .catch((err) => console.log(err));
+
+      //get data buat masukin ke html
+      const getListData = () => {
+        axios
+          .get(API)
+          .then((response) => {
+            let Data = response.data.data;
+            console.log(Data);
+            let toHtml = "";
+            Data.forEach((kelas) => {
+              toHtml += `<div class="col-md-12">
+                <table class="table">
+                      <thead>
+                      <tr>
+                      <td scope="col">${kelas.id}</td>
+                      <td scope="col">${kelas.name}</td>
+                      <td scope="col"></td>
+                      <td scope="col"><button type="button" onclick="confirmDelete(${kelas.id})" class="btn btn-outline-danger">Delete</button></td>
+                      </tr>
+                    </thead>
+                    </table>
+                    </div>`;
+            });
+            $(listdata).html(toHtml);
+          })
+          .catch((err) => console.log(err));
+      };
+      getListData();
+
+      //add data ke database
+      const addData = async () => {
+        const isiData = {
+          name: $("#name-add").val(),
+          description: $("#description-add").val(),
+        };
+        try {
+          const addToAPI = await axios.post(API, isiData);
+          alert("sukses");
+          getListData();
+          $("#exampleModal").modal("hide");
+        } catch (err) {
+          console.log(err.message);
+        }
+      };
+
+      $("#form-post").submit(function (e) {
+        e.preventDefault();
+        addData();
+      });
+
+      const showModalEdit = async (classId) => {
+        try {
+          const dataGet = await axios.get(API + classId);
+          const data2 = dataGet.data.data;
+          $("#id-edit").val(data2.id);
+          $("#name-edit").val(data2.name);
+          $("#description-edit").val(data2.description);
+          $("#startDate-edit").val(data2.startDate);
+          $("#endDate-edit").val(data2.endDate);
+          $("#exampleModal-edit").modal("show");
+        } catch (err) {
+          console.log(err.message);
+        }
+      };
+
+      const putData = async () => {
+        const dataUpdate = {
+          id: $("#id-edit").val(),
+          name: $("#name-edit").val(),
+          description: $("#description-edit").val(),
+          startDate: $("#startDate-edit").val(),
+          endDate: $("#endDate-edit").val(),
+        };
+        try {
+          const updateData = await axios.put(API, dataUpdate);
+          alert("sukses");
+          getListData();
+          $("#exampleModal-edit").modal("hide");
+        } catch (err) {
+          console.log(err.message);
+        }
+      };
+
+      $("#form-edit").submit(function (e) {
+        e.preventDefault();
+        putData();
+      });
+
+      //delet data
+      /*
+        NOTE PENTING BET COK SAT= parameter harus urut
+        terus parameter kedua harus pake petik 1 (') gangerti kenapa
+        */
+      const confirmDelete = async (classId, name) => {
+        //jalanin sweet alert delete
+        Swal.fire({
+          //sweet alertnya
+          title: "Are you sure?",
+          text: "Menghapus data kelas " + name,
+          icon: "warning",
+          showCancelButton: true,
+        }).then((result) => {
+          console.log(result);
+          if (result.isConfirmed) {
+            deleteClass(classId); //manggil fungsi kalo pencet confirm
+          }
+        });
+      };
+
+      const deleteClass = async (classId) => {
+        try {
+          const requestDelete = await axios.delete(API + classId);
+          getListData();
+          Swal.fire(
+            //alert kalo udah selesai di delete
+            "Deleted!",
+            "Your file has been deleted.",
+            "success"
+          );
+        } catch (err) {
+          console.log(err.message);
+        }
+      };
+    </script>
+  </body>
+</html>
